@@ -31,5 +31,8 @@ function json_encode_pretty($obj){return json_pretty(json_encode($obj));};
 function printf_pre($x){return printf('<pre class="print">%s</pre>',$x);};
 //
 
+//printf_pre(stripcslashes(json_encode_pretty($xxx)));
+
+
 die('');
 ?>
