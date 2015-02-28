@@ -51,7 +51,8 @@
 
  function titled($n,$v){
   $f=preg_replace;
-  $nr=$f('/\[(.*?)\]/', '<span class="square-brackets">[<i>$1</i>]</span>',$n);
-  $nr=$f('/\$/', '<span class="sign dollar">&#36;</span>',$nr);
+  $nr=$f('/\$/', '<span class="sign dollar">&#36;</span>',$n);unset($n);
+  $nr=$f('/\[(.*?)\]/','<span class="square-brackets">[<i>$1</i>]</span>',$nr);
   return '<b class="key">'.$nr.'</b>:<span class="data">'.$v.'</span>';
  };
+
