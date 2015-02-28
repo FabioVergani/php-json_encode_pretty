@@ -47,9 +47,11 @@
  function nicejson($o){return json_pretty(json_encode($o));};
 
  function mtx($n,$v){return titled($n,stripcslashes(nicejson($v)));};
- function titled($n,$v){return '<b class="key">'.preg_replace('/\[.*?:(.*?)\]/', '<i>$1</i>',$n).'</b>:<span class="data">'.$v.'</span>';};
+
+
  function titled($n,$v){
-  $nr=preg_replace('/\[.*?:(.*?)\]/', '<span class="square-brackets">[<i>$1</i>]</span>',$n);
-  $nr=preg_replace('/\$/', '<span class="sign dollar">&#36;</span>',$nr);
+  $f=preg_replace;
+  $nr=$f('/\[(.*?)\]/', '<span class="square-brackets">[<i>$1</i>]</span>',$n);
+  $nr=$f('/\$/', '<span class="sign dollar">&#36;</span>',$nr);
   return '<b class="key">'.$nr.'</b>:<span class="data">'.$v.'</span>';
  };
