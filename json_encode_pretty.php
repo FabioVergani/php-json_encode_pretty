@@ -47,3 +47,4 @@
  function nicejson($o){return json_pretty(json_encode($o));};
 
  function mtx($n,$v){return titled($n,stripcslashes(nicejson($v)));};
+ function titled($n,$v){return '<b class="key">'.preg_replace('/\[.*?:(.*?)\]/', '<i>$1</i>',$n).'</b>:<span class="data">'.$v.'</span>';};
