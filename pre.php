@@ -11,8 +11,6 @@ define(pageurl,$m[0].'://'.$m[1].$m[2].'/'.$m[3]);
 unset($m);
 
 //digest:
-function Landing($a,$b,$c,$d){return array('title'=>$a,url=>$b,params=>$c,fallback=>$d);};
-function Publisher($a,$b,$m,$d){$g=array(in=>array(),out=>array());$c=array(required=>$g,optional=>$g);foreach($m as $x){$g=&$c[($x[0]===1)?required:optional];$i=$x[1];$j=$x[2];$g[in][]=$i;$g[out][]=empty($j)?$i:$j;};return array('id'=>$a,'name'=>$b,params=>$c,'callback'=>$d);};
 
 
 
@@ -55,28 +53,7 @@ function ParseQsBy(&$x){
 
 //======================================================================================================================================================================================================================
 //#Config:
-$partner=Publisher(
- 1,
- 'beintoo',
- array(
- //req:
-  array(1,'CLICKID','tid'),
-  array(1,'APP_NAME','app'),
- //opt:
-  array(0,'aaa','bbb'),
-  array(0,'zzz',null)
- ),
- 'http://working.beintoo.com/track/offer_completed.php'
-);
-$campaign=Landing(
- 'PlayCash',
- 'http://www.track2cash.com/click.php',
- array(
-  't2c'=>'a0b7baa3b90f6d16abd088b1d399656a302f',
-  'disc'=>0
- ),
- /*onfail,goto:*/'http://gameland.funnymobile.mobi/lpdef?disc=0'
-);
+
 
 
 
@@ -86,52 +63,6 @@ $params=ParseQsBy($partner[params]);
 $receivedparams=&$params[received];
 //
 $defined=debug?count(get_defined_vars()):null;
-//
-$finaldestination=($campaign[url].'?'.http_build_query($campaign[params]));
-
-/*
-
-$toencode=null;
-$encoded=null;
-//
-//
-if(empty($params[missing][required])){
-
-
-
- $toencode=&$receivedparams[optional];
- $toencode=array(&$receivedparams[required],empty($toencode)?null:$toencode);
-
- $encoded = array();
- array_walk_recursive($toencode, function($x) use (&$output){
-    $encoded[] = $x;
- });
-
-
-}else{
- $finaldestination=$campaign[fallback];
-};
-
-
-
-/*
- http_build_query($receivedparams[required]).'&'.http_build_query($receivedparams[optional]);
-
- $toencode=array(&$receivedparams[required]);
- if(empty($toencode)){
-  $toencode=&$receivedparams[required];
- }else{
-  $toencode=array_merge($toencode,$receivedparams[required])
- };
-
- //unset($toencode);
-
- //$token=http_build_query(().(empty($receivedparams[optional])?x:x));
-
-
-
-
-*/
 
 
 
