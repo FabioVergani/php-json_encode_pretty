@@ -44,7 +44,7 @@
   };
   return $r;
  };
-*/
+
 
 
  function json_pretty($x){
@@ -70,6 +70,34 @@
      $f=substr_count;
      if((($f($s,'"')-$f($s,'\\"'))%2)!=0){$l=!$l;echo('-'.$s.'-');};
      $r.=(($l?'':$p).$s);
+    };
+   };
+   $r.=$n;
+  };
+  return $r;
+ };
+*/
+
+ function json_pretty($x){
+  $r='';
+  if(!empty($x)){
+   $x=preg_split('|([\{\}\]\[,])|',$x,-1,PREG_SPLIT_DELIM_CAPTURE);
+   $i=0;
+   $t=chr(9);//"\t";
+   $n=chr(10);//"\n";
+   $tab=function($i){return str_repeat(chr(9),$i);};//"\t";
+   $branch=function($s,$a,$b){return ($s===$a||$s===$b);};
+   foreach($x as $s){if($s==''){continue;};
+    $p=$tab($i);
+    if($branch($s,'{','[')){$i++;//open*
+     if(($r!='') && ($r[(strlen($r) - 1)]==$n)){$r.=$p;};
+     $r.=($s.$n);
+    }elseif($branch($s,'}',']')){$i--;//*close
+     $p=$tab($i);$r.=($n.$p.$s);//lastlineofbranch
+    }elseif($s==','){
+     $r.=($s.$n);//comma
+    }else{
+     $r.=($p.$s);
     };
    };
    $r.=$n;
