@@ -101,17 +101,16 @@ if(debug){
 
 
 
-
-
- function json_pretty($x,$tag=false){
+ function json_pretty($x,$tag=true){
   $r='';
   if(!empty($x)){
    $x=preg_split('|([\{\}\]\[,])|',$x,-1,PREG_SPLIT_DELIM_CAPTURE);
    $i=0;
+   $l=false;
    $n=chr(10);//:\n
-   $z=chr(13);//:\r
+   $z=chr(8203);//:\zwj
    $tab=function($i){return str_repeat(chr(9),$i);};//:\t
-   $branch=function($s,$a,$b){return ($s===$a||$s===$b);};
+   $branch=function($s,$a,$b) use($l){return !$l &&($s===$a||$s===$b);};
    $f=function($o){return $o;};
    $h=function($o){return '';};
    if($tag===true){
@@ -126,18 +125,17 @@ if(debug){
      $r.=($h($s).($s.$n));
     }elseif($branch($s,'}',']')){$i--;//*close
      $p=$tab($i);$r.=($n.$p.$s.$z);//lastlineofbranch
-    }elseif($s==','){
+    }elseif(!$l && $s==','){
      $r.=($s.$n);//comma
     }else{
-     $r.=($p.$f($s));
+     if(((substr_count($s,'"')-substr_count($s,'\\"'))%2)!=0){$l=!$l;};
+     $r.=(($l?'':$p).$f($s));
     };
    };
    $r.=$n;
   };
   return $r;
  };
-
-
 
 
 
